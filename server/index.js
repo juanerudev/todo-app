@@ -18,10 +18,15 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+console.log('Connecting to MongoDB...');
+
 // Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch((error) => console.error('MongoDB connection error:', error));
+  .catch((error) => {
+    console.error('MongoDB connection error:', error);
+    process.exit(1);
+  });
